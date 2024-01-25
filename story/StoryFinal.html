@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>A West-Side Story</title>
+    <!--Following script copied from Shawn Morgans "simplemap.html" example-->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <style>
+        h1{
+            font-size: 30px;
+            color:rgb(255, 255, 255);
+            text-align: center;
+            margin: 0px;
+            padding-top: 10px;
+        }
+        body{
+            background-color: rgb(155,191,244);
+            margin:0px;
+            padding: 0px;
+        }
+        h2{
+            font-size: 18px;
+            color:rgb(255, 255, 255);
+            text-align: center;
+            padding-top: 5px;
+            padding-bottom: 10px;
+        }
+        h3{
+            font-size: 16px;
+            color:rgb(0, 0, 0);
+            text-align: center;
+            font-style: italic;
+        }
+        #map1{
+            height: 850px;
+            margin: 10px;
+        }
+        header{
+            background-color: rgb(0, 0, 0);
+            margin: 0px;
+            padding: 0px;
+        }
+    </style>
+    <!--Following script from Shawn Morgans "simplemap.html" example-->
+    <!--Disable functions copied from the following source: https://developers.google.com/maps/documentation/javascript/controls#Adding_Controls_to_the_Map -->
+    <!--TopPoints was created after the idea and code found here: https://developers.google.com/maps/documentation/javascript/markers#accessible-->
+    <!--Map Type setting found and used from the following: https://developers.google.com/maps/documentation/javascript/maptypes#BasicMapTypes-->
+    <!--Info window code referenced from: https://developers.google.com/maps/documentation/javascript/infowindows-->
+    <script>
+        let map;
+      
+        function initMap(){
+            map=new google.maps.Map(document.getElementById("map1"), {
+                center:{lat:52.000, lng:-95.000},
+                zoom:4,
+                zoomControl: false,
+                fullscreenControl: false,
+                streetViewControl: false,
+                mapTypeControl: false,
+                scaleControl: true,
+                mapTypeId: 'hybrid',
+
+            });
+            const TopPoints = [
+                [{lat:44.296, lng: -78.315}, "Peterborough", "Peterborough: The start, the end, the home to come and go from. Here lies the world that’s shaped the eyes which see our country, which shape the memories of this trip."],
+                [{lat:46.505, lng: -84.294}, "Sault Ste. Marie", "Sault Ste. Marie: This stop was our first and last outside of Peterborough. It was amazing to see its stark white and snowy appearance on our first arrival, and then the growth of spring on our return trip."],
+                [{lat:48.406, lng: -89.232}, "Thunder Bay", "Thunder Bay: The farthest north I had ever been, and it is so much different than I thought it would be. Great food and great people, and the buzz on the start of our trip was full force by now."],
+                [{lat:49.893, lng: -97.090}, "Winnipeg", "Winnipeg: The first stop exiting Ontario to the west! Check out the Canadian Museum for Human Rights. It was deeply moving and thought provoking."],
+                [{lat:52.158, lng: -106.609}, "Saskatoon", "Saskatoon: I don’t know what everyone is talking about Saskatchewan being flat… The route we took was so hilly! While here check out Wanuskewin which is a historically important location, with walking trails, an art gallery and museum displays. Also say “Hi” to the buffalo!"],
+                [{lat:51.436, lng: -112.693}, "Drumheller", "Drumheller: Did you say you love dinosaurs? Me to! Check out the Royal Tyrrell Museum. Dinosaurs galore. You can even watch the scientists work on excavating real dinosaur bones."],
+                [{lat:51.113, lng: -114.005}, "Calgary", "Calgary: A wonderful city I hope to live in one day. SO many things to see and do, and don’t forget your in Alberta, so eat a few steaks!"],
+                [{lat:50.990, lng: -118.190}, "Revelstoke", "Revelstoke: What a drive to this place through the mountains. Breathtakingly beautiful and this cute town is a perfect place to rent a cabin, watch the stars and if you can, a helicopter ride through the mountains."],
+                [{lat:49.331, lng: -123.018}, "Vancouver", "Vancouver: It’s in the same country…But it’s a completely different climate and world. Spring had sprung here, and it was beautiful. The cherry blossoms were blooming, perfectly in time for their Japanese festival."],
+                [{lat:49.182, lng: -124.037}, "Nanaimo", "Nanaimo: The ferry ride was rough, but so worth it. If you have made it this far, check out Cathedral Grove. The trees are so tall! Also its Nanaimo, have a Nanaimo bar, it won’t disappoint!"],
+                [{lat:49.017, lng: -119.495}, "Osoyoos", "Osoyoos: Check out Spotted Lake on the way here. Also eat a meal, or two, or three at The Bear, The Fish, The Root & The Berry. So delicious and such a great atmosphere."],
+                [{lat:49.535, lng: -115.754}, "Cranbrook", "Cranbrook: Not originally on the list of stops, but so worth it for the trail ride. Crazy intense, but beautiful and so memorable. Check out GOT Adventure for an adventure of a lifetime on horseback."],
+                [{lat:51.172, lng: -115.572}, "Banff", "Banff: It’s Banff, what more needs to be said. So many trails, views and mountains. Huge mountains. Take a gondola ride up to the top of one of them and live in the clouds for a few minutes, or hours."],
+                [{lat:50.750, lng: -111.479}, "Dinosaur Provincial Park", "Dinosaur Provincial Park: Did you enjoy the Tyrell Museum? Because this is even better! Book a guided tour through the restricted area and see dinosaur bones out in the wild, hear incredible stories and meet some dinosaur celebrities."],
+                [{lat:49.515, lng: -108.827}, "Eastend", "Eastend: How did we end up here? Good Question, but we are on the pursuit of an observatory experience and well that’s where Wilkinson Memorial Observatory and the Eastend Astronomy Club come in. The perfect timing resulted in not only star and planet observations, but also the aroura borealis!!"],
+                [{lat:50.411, lng: -104.571}, "Regina", "Regina: Only here for a few hours to drop off a hurt owl, but if you ever come across wounded wildlife or birds on your trip, Salthaven West is the place to go to."]
+            ];
+            
+            TopPoints.forEach(([position, title, description], i) => {
+                const marker = new google.maps.Marker({
+                    position,
+                    map,
+                    title: `${i + 1}. ${title}`,
+                    label: `${i + 1}`,
+                    optimized: true,
+                    animation: google.maps.Animation.DROP,
+                });
+
+                const information = new google.maps.InfoWindow({
+                    content: `${description}`,
+                    ariaLabel: `${i + 1}. ${title}`,
+                });
+
+                marker.addListener("click", () => {
+                    information.open({
+                    anchor: marker,
+                    map,
+                    });
+                });
+            });
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>A West-Side Story</h1>
+        <h2>A Trip To Remember of Western Ontario</h2>
+    </header>
+    <div>
+        <h3>Click on the points to hear snippets of trip highlights!</h3>
+        <div id="map1"></div>
+    </div>
+    <!--Following script from Shawn Morgans "simplemap.html" example-->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCM-WWHYHIKY-do4kquMy9Z4wQaQx51AuE&callback=initMap&v=weekly" async></script>
+</body>
